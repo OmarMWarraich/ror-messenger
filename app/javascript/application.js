@@ -6,6 +6,17 @@ import "jquery_ujs"
 import "semantic-ui"
 import "channels"
 
+const submit_message = function() {
+  $('#message_body').on('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      $('button[type="submit"]').trigger('click');
+      e.target.value = '';
+    }
+  });
+};
+
+
 window.scroll_bottom = function() {
   setTimeout(function() {
     if ($('#messages').length > 0) {
@@ -13,11 +24,12 @@ window.scroll_bottom = function() {
     }
   }, 100);
   }
-  
+
 $(document).on('turbo:load', function() {
   $('.ui.dropdown').dropdown();
   $('.message .close').on('click', function() {
     $(this).closest('.message').transition('fade');
   });
+  submit_message();
   window.scroll_bottom();
 })
